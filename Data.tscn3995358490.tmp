@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://f347m74hysvc"]
+
+[ext_resource type="Script" uid="uid://s4872f4fdnwh" path="res://addons/bulletml_gd/Data.cs" id="1_ohwdh"]
+
+[node name="BulletMLData" type="Node"]
+script = ExtResource("1_ohwdh")
+patterns = Array[Object]([Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":Resource("res://addons/bulletml_gd/GDPattern.cs"),"PatternID":"","SourceFile":"res://res/patterns/samples/Aim.xml")
+])
+bullets = Array[Object]([null])

@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://dq6q7olr1f8y6"]
+
+[ext_resource type="Script" uid="uid://5ocr5ceiskih" path="res://src/Main.cs" id="1_ixcqa"]
+[ext_resource type="PackedScene" uid="uid://cesudro5awdj1" path="res://src/Example/Player/Player.tscn" id="2_g0iti"]
+[ext_resource type="PackedScene" uid="uid://dwt6hvxay2g66" path="res://src/Example/Bullet/Bullet.tscn" id="3_vi5kl"]
+[ext_resource type="Texture2D" uid="uid://c1bqjcpo02g8e" path="res://choco_boss_lines_outline.png" id="4_m42hs"]
+[ext_resource type="Script" uid="uid://gl5crrxkfmn2" path="res://src/enemy,gd.gd" id="5_qo1ew"]
+[ext_resource type="Script" uid="uid://3pk5lctqj4do" path="res://addons/bulletml_gd/BulletSpawner.cs" id="5_vpvvx"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_ixcqa")
+playerScene = ExtResource("2_g0iti")
+bulletScene = ExtResource("3_vi5kl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(339, 103)
+texture = ExtResource("4_m42hs")
+script = ExtResource("5_qo1ew")
+metadata/_edit_group_ = true
+
+[node name="BulletManager" type="Node2D" parent="Sprite2D"]
+position = Vector2(-275, 220)
+script = ExtResource("5_vpvvx")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 148.0
+offset_bottom = 71.0
+metadata/_edit_group_ = true
+
+[node name="BulletPatternLabel" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "BULLET PATTERN"
+
+[node name="PlayerPositionLabel" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Player: (x, y)"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(324, 182)
