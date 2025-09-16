@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://crfjn3xsps2lu"
-path="res://.godot/imported/graph.jpg-2429bf29eb9eef6e4a9372f351498e7e.ctex"
+path="res://.godot/imported/graph.jpg-f20434cd640d11b2552b1303e0b7d706.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/bulletml_gd/graph.jpg"
-dest_files=["res://.godot/imported/graph.jpg-2429bf29eb9eef6e4a9372f351498e7e.ctex"]
+source_file="res://addons/DanmakuGD/Example/graph.jpg"
+dest_files=["res://.godot/imported/graph.jpg-f20434cd640d11b2552b1303e0b7d706.ctex"]
 
 [params]
 

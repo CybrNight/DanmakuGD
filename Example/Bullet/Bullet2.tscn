@@ -1,6 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://5n63t5sul13o"]
 
-[ext_resource type="Texture2D" uid="uid://bfj1tfa0m8pun" path="res://addons/bulletml_gd/Example/player_bullet_2.png" id="1_55bam"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dc1h0"]
+load_path = "res://.godot/imported/player_bullet_2.png-91af38ad143fc47843d00e6e423eee8d.ctex"
 
 [sub_resource type="CircleShape2D" id="1"]
 radius = 5.0
@@ -9,7 +10,7 @@ radius = 5.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
-texture = ExtResource("1_55bam")
+texture = SubResource("CompressedTexture2D_dc1h0")
 centered = false
 
 [node name="Area2D" type="Area2D" parent="."]
