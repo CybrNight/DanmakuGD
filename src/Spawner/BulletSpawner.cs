@@ -4,7 +4,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using bulletml_gd;
+
+namespace DanmakuGD;
 
 public partial class BulletSpawner : Node2D, IBulletManager {
     private const float timeSpeed = 1.0f;
@@ -12,6 +13,8 @@ public partial class BulletSpawner : Node2D, IBulletManager {
 
     private readonly List<NodeBullet> movers = new List<NodeBullet>();
     private readonly List<NodeBullet> topLevelMovers = new List<NodeBullet>();
+
+    private Node2D playerNode;
 
     private PositionDelegate GetPlayerPosition;
     private PositionDelegate GetMousePosition;
@@ -26,7 +29,7 @@ public partial class BulletSpawner : Node2D, IBulletManager {
     public string patternID;
 
     [Export]
-    public BulletFunction[] BulletFunctions;
+    public EquationPattern[] fPatterns;
 
     public Random Rand { get; private set; } = new Random(Guid.NewGuid().GetHashCode());
     public Dictionary<string, FunctionDelegate> CallbackFunctions { get; set; } = new Dictionary<string, FunctionDelegate>();
@@ -63,8 +66,8 @@ public partial class BulletSpawner : Node2D, IBulletManager {
         GetPlayerPosition = new PositionDelegate(Main.GetPlayerPosition);
         GetMousePosition = new PositionDelegate(GetGlobalMousePosition);
 
-        foreach(var func in BulletFunctions) {
-            func.Parse();
+        foreach(var f in fPatterns){
+            f.Parse();
         }
     }
 
@@ -92,7 +95,7 @@ public partial class BulletSpawner : Node2D, IBulletManager {
     }
 
     public void Spawn(string patternID, Vector2 offset = default) {
-        BulletPattern pat;
+        BulletMLLib.BulletPattern pat;
 
         //Create the TopLevel Bullet at the Position of the Spawner
         topLevelBullet = (MarkupBullet)CreateTopBullet();
@@ -154,7 +157,7 @@ public partial class BulletSpawner : Node2D, IBulletManager {
 
     /// <summary>
     /// Spawns a <see cref="FunctionBullet"/> that will follow the path 
-    /// of the referenced <see cref="BulletFunctions"/>
+    /// of the referenced <see cref="fPatterns"/>
     /// </summary>
     /// <param name="id"></param>
     public void SpawnFunction(string id){
@@ -164,25 +167,24 @@ public partial class BulletSpawner : Node2D, IBulletManager {
     public void SpawnFunction(string id, float x, float y){
         NodeBullet mover;
         var func = Data.Instance.GetFunction(id);
+
         //Load sample cos and sin functions into the BulletFunction
-        mover = new FunctionBullet(this, func) { TimeSpeed = timeSpeed, Scale = scale };
-        mover.Position = GlobalPosition;
-        (mover as FunctionBullet).Offset = new Vector2(x, y);
-        mover.Init(this);
+        foreach(var f in func.functions){
+            mover = new FunctionBullet(this, f) { TimeSpeed = timeSpeed, Scale = scale };
+            (mover as FunctionBullet).Offset = new Vector2(x, y);
+            mover.Init(this);
 
-
-        //initialize, store in our list, and return the bullet    
-        movers.Add(mover);
+            //initialize, store in our list, and return the bullet    
+            movers.Add(mover);
+        }
+  
     }
 
     public IBullet CreateBullet() {
         NodeBullet mover;
-        if (moverPool.Count == 0){
-            mover = new MarkupBullet(this) { TimeSpeed = timeSpeed, Scale = scale };
-            mover.Init(this);
-        } else{
-            mover = moverPool.Dequeue();
-        }
+        mover = new MarkupBullet(this) { TimeSpeed = timeSpeed, Scale = scale };
+        mover.Init(this);
+
 
         //initialize, store in our list, and return the bullet    
         movers.Add(mover);

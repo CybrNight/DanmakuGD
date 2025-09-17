@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+namespace DanmakuGD;
+
 public class FrameCounter {
     public long TotalFrames { get; private set; }
     public float TotalSeconds { get; private set; }

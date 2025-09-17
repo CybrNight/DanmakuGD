@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace bulletml_gd;
+namespace DanmakuGD;
 
 public partial class Data : Node {
     private static Data _instance;
     public static Data Instance { get { return _instance; } }
 
     /// <summary>
-    /// Dictionary storing all loaded <see cref="BulletPattern"/> from <see cref="GDPattern"/> 
+    /// Dictionary storing all loaded <see cref="BulletMLLib.BulletPattern"/> from <see cref="MLPattern"/> 
     /// </summary>
     private Dictionary<string, BulletPattern> patternCache = new Dictionary<string, BulletPattern>();
 
@@ -24,15 +24,15 @@ public partial class Data : Node {
     private Dictionary<string, Node2D> bulletCache = new Dictionary<string, Node2D>();
 
     /// <summary>
-    /// Stores all loaded <see cref="BulletFunction"/> in a global cache
+    /// Stores all loaded <see cref="EquationPattern"/> in a global cache
     /// </summary>
-    private Dictionary<string, BulletFunction> functionCache = new Dictionary<string, BulletFunction>();
+    private Dictionary<string, EquationPattern> functionCache = new Dictionary<string, EquationPattern>();
 
     /// <summary>
-    /// List of all <see cref="GDPattern"/> to load into PatternStore
+    /// List of all <see cref="MLPattern"/> to load into PatternStore
     /// </summary>
     [Export]
-    public GDPattern[] patterns;
+    public MLPattern[] patterns;
 
 
     /// <summary>
@@ -51,7 +51,7 @@ public partial class Data : Node {
         //Handle loading all GDPattern into cache
         foreach(var data in patterns) {
             if(data is not null) {
-                LoadPattern(data, manager);
+                CacheMLPattern(data, manager);
             }
         }
 
@@ -67,7 +67,7 @@ public partial class Data : Node {
         }
     }
 
-    public BulletPattern LoadPattern(GDPattern data, IBulletManager manager) {
+    public BulletPattern CacheMLPattern(MLPattern data, IBulletManager manager) {
         var pattern = new BulletPattern(manager);
         pattern.ParseXML(data.SourceFile.Replace("res://", ""));
         patternCache.Add(data.PatternID, pattern);
@@ -78,7 +78,7 @@ public partial class Data : Node {
     /// 
     /// </summary>
     /// <param name="p_id"></param>
-    /// <returns><see cref="BulletPattern"/></returns>
+    /// <returns><see cref="BulletMLLib.BulletPattern"/></returns>
     public BulletPattern GetPattern(string p_id) {
         //Push a Warning to the console if the Pattern does not exist
         if(!patternCache.ContainsKey(p_id)) {
@@ -113,13 +113,13 @@ public partial class Data : Node {
         return bulletCache.GetValueOrDefault(b_id).Duplicate() as Node2D; 
     }
 
-    public void CacheFunction(string key, BulletFunction function) { 
+    public void CacheFunction(string key, EquationPattern function) { 
         if (!functionCache.ContainsKey(key)){
             functionCache.Add(key, function);
         }
     }
 
-    public BulletFunction GetFunction(string func_id) {
+    public EquationPattern GetFunction(string func_id) {
         if(!functionCache.ContainsKey(func_id)) {
             GD.PushError($"No FunctionID {func_id} in Function Cache");
             return default;

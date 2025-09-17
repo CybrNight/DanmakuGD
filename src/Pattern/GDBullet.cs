@@ -3,6 +3,8 @@ using Godot;
 using Godot.Collections;
 using System;
 
+namespace DanmakuGD;
+
 [GlobalClass]
 public partial class GDBullet : Resource
 {

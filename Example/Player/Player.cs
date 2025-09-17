@@ -5,6 +5,8 @@ public partial class Player : Sprite2D
     [Export]
     private float movementSpeed = 400f;
 
+    private Node events;
+
     public override void _Process(double _delta)
     {
         var delta = (float)_delta;
@@ -36,6 +38,9 @@ public partial class Player : Sprite2D
         position.X = Mathf.Clamp(position.X, 0f, GetViewportRect().Size.X);
         position.Y = Mathf.Clamp(position.Y, 0f, GetViewportRect().Size.Y);
         Position = position;
+    }
+
+    public override void _Ready() {
     }
 
     private void _on_Area2D_area_entered(Node area)

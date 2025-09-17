@@ -1,4 +1,4 @@
-﻿using bulletml_gd;
+﻿using BulletMLLib;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BulletMLLib;
+namespace DanmakuGD;
 
 /// <summary>
 /// Defines an extensions of BulletML's <see cref="Bullet"></see> to support controlling a Godot <see cref="Node2D"/>/>
 /// </summary>
-public class NodeBullet : Bullet {
+public partial class NodeBullet : Bullet {
 
     /// <summary>
     /// The <see cref="Node2D"/> in the <see cref="SceneTree"/> this is the parent of the <see cref="BulletNode"/>
@@ -26,7 +26,7 @@ public class NodeBullet : Bullet {
     /// <summary>
     /// A counter variable that can be used by 
     /// </summary>
-    protected float Tick { get { return _tick; } }
+    public float T { get { return _tick; } }
     protected float _tick;
 
     protected bool used = false;
@@ -39,6 +39,9 @@ public class NodeBullet : Bullet {
 
     }
 
+    public void UpdatePosition(){
+        BulletNode.GlobalPosition = Position;
+    }
 
     public override float X {
         get => Position.X;

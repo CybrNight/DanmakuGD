@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 
+
+namespace DanmakuGD;
+
 /// <summary>
 /// Singleton class that holds the current Time delta
 /// </summary>

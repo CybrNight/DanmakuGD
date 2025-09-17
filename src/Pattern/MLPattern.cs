@@ -2,9 +2,9 @@ using BulletMLLib;
 using Godot;
 using System;
 
+namespace DanmakuGD;
 
-[GlobalClass]
-public partial class GDPattern : Resource
+public abstract partial class Pattern : Resource
 {
 
     /// <summary>
@@ -16,10 +16,13 @@ public partial class GDPattern : Resource
     [Export]
     public string BulletRefID { get; private set; }
 
+}
+
+[GlobalClass]
+public partial class MLPattern : Pattern {
     /// <summary>
     /// Path to BulletML XML source file
     /// </summary>
     [Export(PropertyHint.File, "*.xml")]
     public string SourceFile { get; private set; }
-
 }

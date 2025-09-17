@@ -5,7 +5,7 @@ using BulletMLLib;
 using Equationator;
 using Godot;
 
-namespace bulletml_gd;
+namespace DanmakuGD;
 
 /// <summary>
 /// MoveManager - represents a bullet manager, i.e. something generating bullets such as an enemy character.

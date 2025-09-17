@@ -2,7 +2,7 @@ using BulletMLLib;
 using Equationator;
 using Godot;
 
-namespace bulletml_gd;
+namespace DanmakuGD;
 
 public enum MoverType{
     BulletML,
@@ -15,7 +15,7 @@ public enum MoverType{
 /// <summary>
 /// Defines a <see cref="NodeBullet"/> that will follow the
 /// </summary>
-public class MarkupBullet : NodeBullet
+public partial class MarkupBullet : NodeBullet
 {
     private double tick;
 

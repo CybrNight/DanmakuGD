@@ -3,7 +3,7 @@ using System.IO;
 using BulletMLLib;
 using Godot;
 
-namespace bulletml_gd;
+namespace DanmakuGD;
 
 public partial class Main : Node2D {
     [Export]

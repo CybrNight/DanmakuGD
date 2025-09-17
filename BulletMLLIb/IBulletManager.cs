@@ -1,4 +1,4 @@
-using bulletml_gd;
+using DanmakuGD;
 using Equationator;
 using Godot;
 

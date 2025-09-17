@@ -1,6 +1,4 @@
 ﻿using BulletMLLib;
-using BulletMLLib;
-using BulletMLLib;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -8,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bulletml_gd{
+namespace DanmakuGD{
     /// <summary>
     /// Extended Mover class that can move based on Polar Coordinates
     /// </summary>
 
-    public class PolarMover : MarkupBullet {
+    public partial class PolarMover : MarkupBullet {
         public float tick;
 
         public PolarMover(IBulletManager myBulletManager) : base(myBulletManager) {

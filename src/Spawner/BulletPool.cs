@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Godot;
 
-namespace bulletml_gd;
+namespace DanmakuGD;
 
 public partial class BulletPool : Node {
 
