@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dq6q7olr1f8y6"]
+[gd_scene load_steps=10 format=3 uid="uid://dq6q7olr1f8y6"]
 
 [ext_resource type="Script" uid="uid://3pk5lctqj4do" path="res://addons/DanmakuGD/src/Spawner/BulletSpawner.cs" id="1_76bdp"]
 [ext_resource type="Script" uid="uid://5ocr5ceiskih" path="res://addons/DanmakuGD/Example/Main.cs" id="1_obn4c"]
@@ -31,28 +31,20 @@ func _process(delta):
 		timer += delta;
 		global += delta;
 		if global > 2 and timer >= 0.1:
-			spawner.SpawnFunction(\"2sin\", 0, 5);		
+			spawner.SpawnFunction(\"cos\", 0, 5);		
 			timer = 0;
 	
 "
 
-[sub_resource type="Resource" id="Resource_obn4c"]
+[sub_resource type="Resource" id="Resource_6rxdq"]
 script = ExtResource("2_x36r1")
-Variables = null
-EquationDefinitions = ""
-Speed = 0.5
+Variables = Array[Object]([])
+VariableDefinitions = "B=4;"
+EquationDefinitions = "x=cos(T)|y=T;"
+Speed = 10.0
 PatternID = "cos"
 BulletRefID = ""
-metadata/_custom_type_script = "uid://c4lpeqtuxb23b"
-
-[sub_resource type="Resource" id="Resource_nqy6i"]
-script = ExtResource("2_x36r1")
-Variables = null
-EquationDefinitions = ""
-Speed = 10.0
-PatternID = "2sin"
-BulletRefID = ""
-metadata/_custom_type_script = "uid://ck8ypchler3ft"
+metadata/_custom_type_script = "uid://bxuynr56gmw2s"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_17wme"]
 load_path = "res://.godot/imported/graph.jpg-2429bf29eb9eef6e4a9372f351498e7e.ctex"
@@ -72,7 +64,7 @@ metadata/_edit_group_ = true
 [node name="BulletSpawner" type="Node2D" parent="Sprite2D"]
 position = Vector2(0, 184)
 script = ExtResource("1_76bdp")
-fPatterns = Array[Resource]([SubResource("Resource_obn4c"), SubResource("Resource_nqy6i")])
+fPatterns = Array[Resource]([SubResource("Resource_6rxdq")])
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3

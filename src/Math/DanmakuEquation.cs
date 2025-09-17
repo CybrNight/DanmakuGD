@@ -14,7 +14,7 @@ public partial class DanmakuEquation : Expression {
     public string ExpressionStr { get; private set; }
 
     public RefCounted BaseInstance { get; private set; }
-    private Dictionary<string, Variant> variables = new Dictionary<string, Variant>();
+    private Dictionary<string, float> variables = new Dictionary<string, float>();
     
     public Variant Value { get {
             return ExecuteExpression();
@@ -24,8 +24,7 @@ public partial class DanmakuEquation : Expression {
     /// Registers a new variable to be passed to the underlying <see cref="Expression"/>
     /// IF desired, it will auto-reparse the Expression
     /// </summary>
-    public void AddVar(string vname, Variant value, bool reparse){
-        variables[vname] = new Variant();
+    public void AddVar(string vname, float value, bool reparse){
         variables[vname] = value;
 
         if(reparse) {
@@ -34,7 +33,7 @@ public partial class DanmakuEquation : Expression {
         }
     }
 
-    public void SetVar(string vname, Variant value) {
+    public void SetVar(string vname, float value) {
         variables[vname] = value;
     }
 
@@ -54,7 +53,7 @@ public partial class DanmakuEquation : Expression {
     /// Returns the evaluated value of the <see cref="Expression"/> with saved values
     /// </summary>
     /// <returns></returns>
-    public Variant ExecuteExpression() {
+    public float ExecuteExpression() {
         var vars = variables.Values.ToArray();
 
         return ExecuteExpression(vars, BaseInstance);
@@ -66,9 +65,9 @@ public partial class DanmakuEquation : Expression {
     /// <param name="values"></param>
     /// <param name="baseInstance"></param>
     /// <returns></returns>
-    private Variant ExecuteExpression(Variant[] values, GodotObject baseInstance=null){
+    private float ExecuteExpression(float[] values, GodotObject baseInstance=null){
         var valuesArr = Variant.From(values).AsGodotArray();
-        return Execute(valuesArr, baseInstance);
+        return ((float)Execute(valuesArr, baseInstance));
     }
 
 

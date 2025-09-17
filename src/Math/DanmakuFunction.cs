@@ -25,10 +25,11 @@ public partial class DanmakuFunction : Resource {
     public float Speed = 25;
 
     public CoordType CoordType { get; private set; } = CoordType.Carteesian;
-    private Dictionary<string, Variant> variables = new Dictionary<string, Variant>();
+    private Dictionary<string, float> variables = new Dictionary<string, float>();
 
-    public DanmakuFunction() {
+    public DanmakuFunction(Dictionary<string, float> variables) {
         dimensions = new Dictionary<CName, Expression>();
+        this.variables = variables;
     }
 
     private Dictionary<CName, Expression> dimensions;
@@ -78,14 +79,16 @@ public partial class DanmakuFunction : Resource {
     /// <returns></returns>
     public Vector2 Execute(NodeBullet bullet, Array[] args = default){
         float x, y = 0.0f;
+        var values = variables.Values.ToArray();
+        var collection = Variant.From(values).AsGodotArray();
         // If there is an RFunc then we can solve r^2 = cos(theta) + sin(theta)
         if(RFunc == null) {
-            x = (float)XFunc.Execute([], bullet);
-            y = -(float)YFunc.Execute([], bullet);
+            x = (float)XFunc.Execute(collection, bullet);
+            y = -(float)YFunc.Execute(collection, bullet);
 
             return new Vector2(x, y);
         } else{
-            var r = (float)RFunc.Execute([], bullet);
+            var r = (float)RFunc.Execute(collection, bullet);
 
             x = Mathf.Cos(bullet.T) * r;
             y = -Mathf.Sin(bullet.T) * r;
@@ -102,6 +105,7 @@ public partial class DanmakuFunction : Resource {
 
         if(status != Error.Ok) {
             GD.PushError($"BulletFunction Error ({status}): Failed to set {expStr}");
+            throw new Exception();
         }
 
         dimensions[cname] = exp;

@@ -66,9 +66,14 @@ public partial class BulletSpawner : Node2D, IBulletManager {
         GetPlayerPosition = new PositionDelegate(Main.GetPlayerPosition);
         GetMousePosition = new PositionDelegate(GetGlobalMousePosition);
 
-        foreach(var f in fPatterns){
-            f.Parse();
+        try{
+            foreach(var f in fPatterns) {
+                f.Parse();
+            }
+        } catch (Exception e){
+            GD.PushError(e.Message);
         }
+        
     }
 
     float counter = 0;

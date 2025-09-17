@@ -4,6 +4,15 @@ using System;
 
 [GlobalClass]
 public partial class FloatVar : VarData {
+    
+    public FloatVar(){
+
+    }
+
+    public FloatVar(string vname, float value){
+        VName = vname;
+        Value = value;
+    }
 
     [Export]
     public override string VName { get; protected set; }
