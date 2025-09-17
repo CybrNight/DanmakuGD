@@ -2,7 +2,7 @@ using System;
 
 namespace BulletMLLib
 {
-	public class BulletRefNode : BulletNode
+	public partial class BulletRefNode : BulletNode
 	{
 		#region Members
 

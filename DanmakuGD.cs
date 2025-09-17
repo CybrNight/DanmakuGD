@@ -5,7 +5,7 @@ using System;
 namespace DanmakuGD;
 
 [Tool]
-public partial class GDBulletML : EditorPlugin
+public partial class DanmakuGD : EditorPlugin
 {
 
 	private static Time time;

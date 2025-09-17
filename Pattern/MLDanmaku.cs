@@ -4,7 +4,7 @@ using System;
 
 namespace DanmakuGD;
 
-public abstract partial class Pattern : Resource
+public abstract partial class Danmaku : Resource
 {
 
     /// <summary>
@@ -19,7 +19,7 @@ public abstract partial class Pattern : Resource
 }
 
 [GlobalClass]
-public partial class MLPattern : Pattern {
+public partial class MLDanmaku : Danmaku {
     /// <summary>
     /// Path to BulletML XML source file
     /// </summary>

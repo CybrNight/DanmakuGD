@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 namespace DanmakuGD;
 
-
 [GlobalClass]
-public partial class EquationSystem : Resource {
+public partial class DanmakuEquation : Resource {
 
 
     public float T { get; set; }
@@ -14,7 +13,7 @@ public partial class EquationSystem : Resource {
 
     public CoordType CoordType { get; private set; } = CoordType.Carteesian;
 
-    public EquationSystem() {
+    public DanmakuEquation() {
         components = new Dictionary<CName, Expression>();
     }
 
@@ -62,7 +61,7 @@ public partial class EquationSystem : Resource {
     /// <summary>
     /// Handles computing the value of each Expression and saving to property value
     /// </summary>
-    /// <param name="bullet">The Bullet that owns this <see cref="EquationSystem"/></param> 
+    /// <param name="bullet">The Bullet that owns this <see cref="DanmakuEquation"/></param> 
     /// <param name="args"></param>
     /// <returns></returns>
     public Vector2 Execute(NodeBullet bullet, Array[] args = default){

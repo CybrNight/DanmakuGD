@@ -10,10 +10,10 @@ namespace DanmakuGD;
 public partial class FunctionBullet : NodeBullet
 {
 
-    public EquationSystem Function { get; set; }
+    public DanmakuEquation Function { get; set; }
     public Vector2 Offset { get; set; }
 
-    public FunctionBullet(IBulletManager manager, EquationSystem function) : base(manager) { 
+    public FunctionBullet(IBulletManager manager, DanmakuEquation function) : base(manager) { 
         _tick = 0;
         Function = function;
         Speed = function.Speed;

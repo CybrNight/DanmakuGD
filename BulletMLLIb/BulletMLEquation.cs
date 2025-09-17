@@ -9,6 +9,14 @@ namespace BulletMLLib
 	/// </summary>
 	public class BulletMLEquation : Equation
 	{
+		public Expression Expression { get; set; }
+
+		public void ParseExpression(string expStr){
+			Expression = new Expression();
+
+			Expression.Parse(expStr);
+		}
+
 		public BulletMLEquation(IBulletManager manager)
 		{
 			//add the specific functions we will use for bulletml grammar

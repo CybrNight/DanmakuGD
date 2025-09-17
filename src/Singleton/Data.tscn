@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://f347m74hysvc"]
 
 [ext_resource type="Script" uid="uid://s4872f4fdnwh" path="res://addons/DanmakuGD/src/Data.cs" id="1_yh4gx"]
-[ext_resource type="Script" uid="uid://cng4wg1mno6dd" path="res://addons/DanmakuGD/src/Pattern/MLPattern.cs" id="2_blj82"]
+[ext_resource type="Script" uid="uid://cng4wg1mno6dd" path="res://addons/DanmakuGD/Pattern/MLPattern.cs" id="2_blj82"]
 [ext_resource type="PackedScene" uid="uid://dwt6hvxay2g66" path="res://addons/DanmakuGD/Example/Bullet/Bullet.tscn" id="3_6e75k"]
-[ext_resource type="Script" uid="uid://bw5djmvgcd0hd" path="res://addons/DanmakuGD/src/Pattern/GDBullet.cs" id="4_bb8oo"]
+[ext_resource type="Script" uid="uid://bw5djmvgcd0hd" path="res://addons/DanmakuGD/Pattern/GDBullet.cs" id="4_bb8oo"]
 
 [sub_resource type="Resource" id="Resource_m7lrd"]
 script = ExtResource("2_blj82")
