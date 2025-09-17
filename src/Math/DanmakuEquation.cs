@@ -1,98 +1,83 @@
 ﻿using Godot;
-using System;
 using System.Collections.Generic;
-
+using System.Linq;
 namespace DanmakuGD;
 
-[GlobalClass]
-public partial class DanmakuEquation : Resource {
-
-
-    public float T { get; set; }
-    public float Speed = 25;
-
-    public CoordType CoordType { get; private set; } = CoordType.Carteesian;
-
-    public DanmakuEquation() {
-        components = new Dictionary<CName, Expression>();
-    }
-
-    private Dictionary<CName, Expression> components;
+/// <summary>
+/// Extension of <see cref="Expression"/>
+/// </summary>
+public partial class DanmakuEquation : Expression {
 
     /// <summary>
-    /// Gets the <see cref="Expression"/> that controls the X component
+    /// The string of the currently parsed <see cref="Expression"/>/>
     /// </summary>
-    public Expression XFunc {
-        get {
-            Expression result;
-            var status = components.TryGetValue(CName.X, out result);
-            if(!status) {
-                return default;
-            }
+    public string ExpressionStr { get; private set; }
 
-            return result;
+    public RefCounted BaseInstance { get; private set; }
+    private Dictionary<string, Variant> variables = new Dictionary<string, Variant>();
+    
+    public Variant Value { get {
+            return ExecuteExpression();
+    } }
+
+    /// <summary>
+    /// Registers a new variable to be passed to the underlying <see cref="Expression"/>
+    /// IF desired, it will auto-reparse the Expression
+    /// </summary>
+    public void AddVar(string vname, Variant value, bool reparse){
+        variables[vname] = new Variant();
+        variables[vname] = value;
+
+        if(reparse) {
+            var vars = variables.Keys.ToArray();
+            Parse(ExpressionStr, vars);
         }
     }
 
-    public Expression YFunc {
-        get {
-            Expression result;
-            var status = components.TryGetValue(CName.Y, out result);
-            if(!status) {
-                return default;
-            }
-
-            return result;
-        }
-    }
-
-    public Expression RFunc {
-        get {
-            Expression result;
-            var status = components.TryGetValue(CName.R, out result);
-            if(!status) {
-                return default;
-            }
-
-            return result;
-        }
+    public void SetVar(string vname, Variant value) {
+        variables[vname] = value;
     }
 
     /// <summary>
-    /// Handles computing the value of each Expression and saving to property value
+    /// Parses the underlying <see cref="Expression"/> 
+    /// Uses values stored in <see cref="variables"/>
     /// </summary>
-    /// <param name="bullet">The Bullet that owns this <see cref="DanmakuEquation"/></param> 
-    /// <param name="args"></param>
+    /// <param name="expression"></param>
+    public void ParseExpression(string expression){
+        var vars = variables.Keys.ToArray();
+
+        Parse(expression, vars);
+    }
+
+
+    /// <summary>
+    /// Returns the evaluated value of the <see cref="Expression"/> with saved values
+    /// </summary>
     /// <returns></returns>
-    public Vector2 Execute(NodeBullet bullet, Array[] args = default){
-        float x, y = 0.0f;
-        // If there is an RFunc then we can solve r^2 = cos(theta) + sin(theta)
-        if(RFunc == null) {
-            x = (float)XFunc.Execute([], bullet);
-            y = -(float)YFunc.Execute([], bullet);
+    public Variant ExecuteExpression() {
+        var vars = variables.Values.ToArray();
 
-            return new Vector2(x, y);
-        } else{
-            var r = (float)RFunc.Execute([], bullet);
+        return ExecuteExpression(vars, BaseInstance);
+    }
 
-            x = Mathf.Cos(bullet.T) * r;
-            y = -Mathf.Sin(bullet.T) * r;
-
-            return new Vector2(x, y);
-        }
+    /// <summary>
+    /// Allows for direct call to Execute
+    /// </summary>
+    /// <param name="values"></param>
+    /// <param name="baseInstance"></param>
+    /// <returns></returns>
+    private Variant ExecuteExpression(Variant[] values, GodotObject baseInstance=null){
+        var valuesArr = Variant.From(values).AsGodotArray();
+        return Execute(valuesArr, baseInstance);
     }
 
 
+    [Export(PropertyHint.MultilineText)]
+    public string ExpressionString { get; private set; }
 
-    public void Parse(CName cname, string expStr){
-        var exp = new Expression();
-        var status = exp.Parse(expStr);
+    public Expression Expression { get; private set; }
 
-        if(status != Error.Ok) {
-            GD.PushError($"BulletFunction Error ({status}): Failed to set {expStr}");
-        }
+    public DanmakuEquation(){ 
 
-        components[cname] = exp;
     }
-
 }

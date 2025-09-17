@@ -67,7 +67,7 @@ public partial class DanmakuController : Node2D, IBulletManager {
         GetMousePosition = new PositionDelegate(GetGlobalMousePosition);
 
         foreach(var f in patterns) {
-            f.Parse();
+            //f.Parse();
         }
     }
 
@@ -169,7 +169,7 @@ public partial class DanmakuController : Node2D, IBulletManager {
         var func = Data.Instance.GetFunction(id);
 
         //Load sample cos and sin functions into the BulletFunction
-        foreach(var f in func.functions) {
+        foreach(var f in func.equations) {
             mover = new FunctionBullet(this, f) { TimeSpeed = timeSpeed, Scale = scale };
             (mover as FunctionBullet).Offset = new Vector2(x, y);
             mover.Init(this);

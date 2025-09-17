@@ -10,7 +10,7 @@ namespace BulletMLLib
 	/// This is the bullet class that outside assemblies will interact with.
 	/// Just inherit from this class and override the abstract functions!
 	/// </summary>
-	public abstract partial class Bullet : Node, IBullet
+	public abstract partial class Bullet : RefCounted, IBullet
 	{
 		#region Members
 

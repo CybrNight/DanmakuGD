@@ -1,24 +1,10 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static Godot.Projection;
 
 namespace DanmakuGD;
-
-/// <summary>
-/// Stores two <see cref="Expression"/> for X and Y components
-/// </summary>
-public enum CoordType{ 
-    Carteesian,
-    Polar,
-}
-
-public enum CName{
-    X = 'x',
-    Y = 'y',
-    R = 'r'
-}
-
 
 /// <summary>
 /// Base type for <see cref="EquationDanmaku"/>
@@ -27,31 +13,44 @@ public enum CName{
 [GlobalClass]
 public partial class EquationDanmaku : Danmaku {
 
-    public List<DanmakuEquation> functions = new List<DanmakuEquation>();
+    [Export]
+    public FloatVar[] Variables { get; private set; }
 
     [Export(PropertyHint.MultilineText)]
-    public string FunctionString { get; set; }
+    public string EquationDefinitions { get; private set; }
+
+    private Dictionary<string, Variant> variables = new Dictionary<string, Variant>();
+
 
     [Export]
     public float Speed { get; set; } = 10f;
 
-    [Export]
-    public DanmakuExpression p;
-
     public Node2D Owner { get; private set; }
 
+    /// <summary>
+    /// List of all <see cref="DanmakuFunction"/> that make up this danmaku
+    /// </summary>
+    public List<DanmakuFunction> equations = new List<DanmakuFunction>();
+
     public void Parse() {
-        functions = new List<DanmakuEquation>();
-        var lines = FunctionString.Split(";", StringSplitOptions.RemoveEmptyEntries);
+        equations = new List<DanmakuFunction>();
+
+        // Store all defined variables for passing to Expression
+        foreach(var floatVar in Variables) {
+            variables[floatVar.VName] = floatVar.Value;
+        }
+
+        var equationDefs = EquationDefinitions.Split(';', StringSplitOptions.RemoveEmptyEntries);
 
         // Treat each line in the FunctionString as it's own EquationSystem
-        foreach(var line in lines) {
-            var bf = new DanmakuEquation();
+        foreach(var line in equationDefs) {
+            var df = new DanmakuFunction();
             var expressions = line.Trim().Split("|");
             GD.Print(expressions.Length);
             foreach (var e in expressions){
-                bf.Parse((CName)(e[0]), e.Substring(2));
-                functions.Add(bf);
+                var vnames = variables.Keys.ToArray();
+                df.Parse((CName)(e[0]), e.Substring(2), vnames);
+                equations.Add(df);
             }
         }
 

@@ -13,7 +13,7 @@ public partial class Data : Node {
     public static Data Instance { get { return _instance; } }
 
     /// <summary>
-    /// Dictionary storing all loaded <see cref="BulletMLLib.BulletPattern"/> from <see cref="MLPattern"/> 
+    /// Dictionary storing all loaded <see cref="BulletMLLib.BulletPattern"/> from <see cref="MLDanmaku"/> 
     /// </summary>
     private Dictionary<string, BulletPattern> patternCache = new Dictionary<string, BulletPattern>();
 
@@ -24,15 +24,15 @@ public partial class Data : Node {
     private Dictionary<string, Node2D> bulletCache = new Dictionary<string, Node2D>();
 
     /// <summary>
-    /// Stores all loaded <see cref="EquationPattern"/> in a global cache
+    /// Stores all loaded <see cref="EquationDanmaku"/> in a global cache
     /// </summary>
-    private Dictionary<string, EquationPattern> functionCache = new Dictionary<string, EquationPattern>();
+    private Dictionary<string, EquationDanmaku> functionCache = new Dictionary<string, EquationDanmaku>();
 
     /// <summary>
-    /// List of all <see cref="MLPattern"/> to load into PatternStore
+    /// List of all <see cref="MLDanmaku"/> to load into PatternStore
     /// </summary>
     [Export]
-    public MLPattern[] patterns;
+    public MLDanmaku[] patterns;
 
 
     /// <summary>
@@ -67,7 +67,7 @@ public partial class Data : Node {
         }
     }
 
-    public BulletPattern CacheMLPattern(MLPattern data, IBulletManager manager) {
+    public BulletPattern CacheMLPattern(MLDanmaku data, IBulletManager manager) {
         var pattern = new BulletPattern(manager);
         pattern.ParseXML(data.SourceFile.Replace("res://", ""));
         patternCache.Add(data.PatternID, pattern);
@@ -113,13 +113,13 @@ public partial class Data : Node {
         return bulletCache.GetValueOrDefault(b_id).Duplicate() as Node2D; 
     }
 
-    public void CacheFunction(string key, EquationPattern function) { 
+    public void CacheFunction(string key, EquationDanmaku function) { 
         if (!functionCache.ContainsKey(key)){
             functionCache.Add(key, function);
         }
     }
 
-    public EquationPattern GetFunction(string func_id) {
+    public EquationDanmaku GetFunction(string func_id) {
         if(!functionCache.ContainsKey(func_id)) {
             GD.PushError($"No FunctionID {func_id} in Function Cache");
             return default;
