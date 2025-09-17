@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Xml;
 using System.Xml.Schema;
 
@@ -60,6 +61,7 @@ namespace BulletMLLib
 		/// <param name="xmlFileName">Xml file name.</param>
 		public void ParseXML(string xmlFileName)
 		{
+			GD.Print("Here");
 			//grab that filename 
 			Filename = xmlFileName;
 

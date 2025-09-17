@@ -30,8 +30,9 @@ func _process(delta):
 	if not Engine.is_editor_hint():
 		timer += delta;
 		global += delta;
-		if global > 2 and timer >= 0.1:
+		if  global < 5 and timer > 0.5:
 			spawner.SpawnFunction(\"cos\", 0, 5);		
+			spawner.Spawn(\"maybe\", 0, 0);
 			timer = 0;
 	
 "

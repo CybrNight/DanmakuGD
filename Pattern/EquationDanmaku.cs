@@ -80,7 +80,6 @@ public partial class EquationDanmaku : Danmaku {
         foreach(var line in equationDefs) {
             var df = new DanmakuFunction(variables);
             var expressions = line.Trim().Split("|");
-            GD.Print(expressions.Length);
             foreach (var e in expressions){
                 var vnames = variables.Keys.ToArray();
                 

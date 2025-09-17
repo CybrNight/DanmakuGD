@@ -136,15 +136,23 @@ namespace BulletMLLib
 					BulletRefNode refNode = childNode as BulletRefNode;
 					BulletRefTask = new BulletMLTask(refNode.ReferencedBulletNode, this);
 
-					//populate the params of the bullet ref
-					for (int i = 0; i < childNode.ChildNodes.Count; i++)
-					{
+					if(BulletRefTask == this) {
+                        return;
+					} else {
+                        // Prepare for copy
 
-						BulletRefTask.ParamList.Add(childNode.ChildNodes[i].GetValue(this, bullet));
-					}
+                        ParamList.Clear();
+                        //Copy the BulletRef ParamList into this Task. Makes them the same task!
+                        for(int i = 0; i < childNode.ChildNodes.Count; i++) {
+                            var value = childNode.ChildNodes[i].GetValue(this, bullet);
+                            BulletRefTask.ParamList.Add(value);
+                            ParamList.Add(value);
+                        }
 
-					BulletRefTask.ParseTasks(bullet);
-					ChildTasks.Add(BulletRefTask);
+                        BulletRefTask.ParseTasks(bullet);
+                        ChildTasks.Add(BulletRefTask);
+                    }
+					
 				}
 				break;
 

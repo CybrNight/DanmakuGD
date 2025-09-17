@@ -228,9 +228,10 @@ namespace BulletMLLib
 		/// <param name="bullet">The bullet to get the value for</param>
 		public float GetValue(BulletMLTask task, Bullet bullet)
 		{
-			//send to the equation for an answer
-			var result = (float)NodeEquation.ExecuteEquation(task);
-			return result;
+            //send to the equation for an answer
+            var result = (float)NodeEquation.ExecuteEquation(task);
+
+            return result;
 		}
 
 		#region XML Methods
@@ -242,8 +243,8 @@ namespace BulletMLLib
 		/// <param name="bulletNodeElement">Bullet node element.</param>
 		public void Parse(XmlNode bulletNodeElement, BulletMLNode parentNode, IBulletManager manager)
 		{
-			// Handle null argument.
-			if (null == bulletNodeElement)
+            // Handle null argument.
+            if (null == bulletNodeElement)
 			{
 				throw new ArgumentNullException("bulletNodeElement");
 			}
@@ -316,7 +317,8 @@ namespace BulletMLLib
 			//validate all the childe nodes
 			foreach (BulletMLNode childnode in ChildNodes)
 			{
-				childnode.ValidateNode();
+                GD.Print("BulletMLNode:" + this);
+                childnode.ValidateNode();
 			}
 		}
 

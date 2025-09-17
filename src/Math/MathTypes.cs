@@ -5,3 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DanmakuGD;
+
+public enum MathTypes{
+
+}

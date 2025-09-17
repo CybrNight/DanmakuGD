@@ -16,7 +16,7 @@ public partial class BulletMLTask : RefCounted {
     }
 
     public float _rank { get {
-            return (float)GameManager.Rank;
+            return (float)1f;
         }
     }
 

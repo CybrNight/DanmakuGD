@@ -76,7 +76,7 @@ namespace BulletMLLib
 
 			foreach (BulletMLNode childNode in Node.ChildNodes)
 			{
-				ParseChildNode(childNode, bullet);
+                ParseChildNode(childNode, bullet);
 			}
 		}
 		
@@ -133,10 +133,11 @@ namespace BulletMLLib
 					//create the action task
 					ActionTask actionTask = new ActionTask(myActionNode, this);
 
+
 					//add the params to the action task
 					for (int i = 0; i < childNode.ChildNodes.Count; i++)
 					{
-						actionTask.ParamList.Add(childNode.ChildNodes[i].GetValue(this, bullet));
+						var value = childNode.ChildNodes[i].GetValue(this, bullet);
 					}
 
 					//parse the children of the action node into the task
@@ -183,10 +184,15 @@ namespace BulletMLLib
 					//create the fire task
 					FireTask fireTask = new FireTask(myFireNode.ReferencedFireNode, this);
 
+					// Prepare to copy over the FireRefTask to this FireTask
+					ParamList.Clear();
+
 					//add the params to the fire task
 					for (int i = 0; i < childNode.ChildNodes.Count; i++)
 					{
-						fireTask.ParamList.Add(childNode.ChildNodes[i].GetValue(this, bullet));
+						var value = childNode.ChildNodes[i].GetValue(this, bullet);
+						fireTask.ParamList.Add(value);
+						ParamList.Add(value);
 					}
 
 					//parse the children of the action node into the task

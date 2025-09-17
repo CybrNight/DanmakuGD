@@ -192,7 +192,8 @@ namespace BulletMLLib
 		/// <param name="rootNode">This is a top level node... find the first "top" node and use it to define this bullet</param>
 		public void InitTopNode(BulletMLNode rootNode)
 		{
-			Debug.Assert(null != rootNode);
+            GD.Print("Init Top Node");
+            Debug.Assert(null != rootNode);
 
 			//okay find the item labelled 'top'
 			bool bValidBullet = false;
