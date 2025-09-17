@@ -163,15 +163,15 @@ namespace BulletMLLib
 			}
 		}
 
-		#endregion //Properties
+        #endregion //Properties
 
-		#region Methods
+        #region Methods
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BulletMLLib.Bullet"/> class.
-		/// </summary>
-		/// <param name="myBulletManager">My bullet manager.</param>
-		protected Bullet(IBulletManager myBulletManager)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BulletMLLib.Bullet"/> class.
+        /// </summary>
+        /// <param name="myBulletManager">My bullet manager.</param>
+        protected Bullet(IBulletManager myBulletManager)
 		{
 			//grba the bullet manager for this dude
 			Debug.Assert(null != myBulletManager);

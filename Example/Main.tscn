@@ -24,7 +24,7 @@ func _ready():
 func _late_ready():
 	if not Engine.is_editor_hint():
 		spawner.Spawn(\"maybe\", 0, 0);
-	pass
+		pass
 
 func _process(delta):
 	if not Engine.is_editor_hint():
@@ -64,6 +64,7 @@ metadata/_edit_group_ = true
 [node name="BulletSpawner" type="Node2D" parent="Sprite2D"]
 position = Vector2(0, 184)
 script = ExtResource("1_76bdp")
+bulletScene = ExtResource("3_nqy6i")
 fPatterns = Array[Resource]([SubResource("Resource_6rxdq")])
 
 [node name="Control" type="Control" parent="."]

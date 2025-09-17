@@ -5,7 +5,7 @@ namespace BulletMLLib
 	/// <summary>
 	/// This task pauses for a specified amount of time before resuming
 	/// </summary>
-	public class WaitTask : BulletMLTask
+	public partial class WaitTask : BulletMLTask
 	{
 		#region Members
 

@@ -7,7 +7,7 @@ namespace BulletMLLib
 	/// <summary>
 	/// This task changes the direction a little bit every frame
 	/// </summary>
-	public class ChangeDirectionTask : BulletMLTask
+	public partial class ChangeDirectionTask : BulletMLTask
 	{
 		#region Members
 

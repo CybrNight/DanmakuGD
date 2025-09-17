@@ -1,3 +1,5 @@
+using System;
+
 namespace BulletMLLib;
 
 /// <summary>
@@ -5,6 +7,14 @@ namespace BulletMLLib;
 /// </summary>
 public static class GameManager
 {
+    public static Random Rand { get; private set; }
+    public static float Rank { get; private set; }
+
+    static GameManager(){
+        Rand = new Random(Guid.NewGuid().GetHashCode());
+        Rank = 1f;
+    }
+
     //TODO: get rid of this class and move game difficulty in to bullet manager
 
     //TODO: bullet should store the difficulty when they are fired

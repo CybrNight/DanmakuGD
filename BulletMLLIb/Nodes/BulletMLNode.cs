@@ -229,7 +229,7 @@ namespace BulletMLLib
 		public float GetValue(BulletMLTask task, Bullet bullet)
 		{
 			//send to the equation for an answer
-			var result = (float)NodeEquation.Solve(task.GetParamValue);
+			var result = (float)NodeEquation.ExecuteEquation(task);
 			return result;
 		}
 
@@ -287,7 +287,7 @@ namespace BulletMLLib
 					if (XmlNodeType.Text == childNode.NodeType)
 					{
 						//Get the text of the child xml node, but store it in THIS bullet node
-						NodeEquation.Parse(childNode.Value);
+						NodeEquation.ParseEquation(childNode.Value);
 						continue;
 					}
 					else if (XmlNodeType.Comment == childNode.NodeType)

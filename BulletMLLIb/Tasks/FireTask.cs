@@ -8,7 +8,7 @@ namespace BulletMLLib
 	/// <summary>
 	/// A task to shoot a bullet
 	/// </summary>
-	public class FireTask : BulletMLTask
+	public partial class FireTask : BulletMLTask
 	{
 		#region Members
 

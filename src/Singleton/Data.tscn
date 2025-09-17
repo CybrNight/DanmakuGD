@@ -7,7 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_m7lrd"]
 script = ExtResource("2_blj82")
-SourceFile = "res://addons/DanmakuGD/Sample/patterns/[Bulletsmorph]_aba_3.xml"
+SourceFile = "res://addons/DanmakuGD/Sample/patterns/[Bulletsmorph]_convergent.xml"
 PatternID = "maybe"
 BulletRefID = "default"
 metadata/_custom_type_script = "uid://cng4wg1mno6dd"
