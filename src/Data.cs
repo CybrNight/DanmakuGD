@@ -1,6 +1,5 @@
 using BulletMLLib;
 using Godot;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,7 +50,7 @@ public partial class Data : Node {
         //Handle loading all GDPattern into cache
         foreach(var data in patterns) {
             if(data is not null) {
-                CacheMLPattern(data, manager);
+                //CacheMLPattern(data, manager);
             }
         }
 
@@ -67,11 +66,13 @@ public partial class Data : Node {
         }
     }
 
-    public BulletPattern CacheMLPattern(MLDanmaku data, IBulletManager manager) {
-        var pattern = new BulletPattern(manager);
-        pattern.ParseXML(data.SourceFile.Replace("res://", ""));
-        patternCache.Add(data.PatternID, pattern);
-        return pattern;
+
+    public void CacheMLPattern(string id, BulletPattern pattern) {
+        var success  = patternCache.TryAdd(id, pattern);
+
+        if(!success) {
+            GD.PushError($"PatternID, {id} already exists in PatternCache");
+        }
     }
 
     /// <summary>
@@ -81,12 +82,14 @@ public partial class Data : Node {
     /// <returns><see cref="BulletMLLib.BulletPattern"/></returns>
     public BulletPattern GetPattern(string p_id) {
         //Push a Warning to the console if the Pattern does not exist
-        if(!patternCache.ContainsKey(p_id)) {
+        var success = patternCache.TryGetValue(p_id, out var pattern);
+        
+
+        if(!success) {
             GD.PushError($"No PatternID {p_id} in PatternCache!");
-            return default;
         }
 
-        return patternCache[p_id];
+        return pattern;
     }
 
     public void LoadBullet(GDBullet data){

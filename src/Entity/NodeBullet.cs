@@ -21,7 +21,7 @@ public partial class NodeBullet : Bullet {
     /// <summary>
     /// The <see cref="Node2D"/> in the <see cref="SceneTree"/> that this <see cref="Bullet"/> controls
     /// </summary>
-    protected Node2D BulletNode { get; set; }
+    public Node2D BulletNode { get; protected set; }
 
     /// <summary>
     /// A counter variable that can be used by 
@@ -77,7 +77,7 @@ public partial class NodeBullet : Bullet {
 
     public void Init(Node2D parent, string bRef = "default") {
         ParentNode = parent;
-        BulletNode = Data.Instance.GetBulletNode(bRef);
+        BulletNode = MyBulletManager.PopBullet();
         ParentNode.AddChild(BulletNode);
 
         Used = true;

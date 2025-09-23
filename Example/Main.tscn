@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dq6q7olr1f8y6"]
+[gd_scene load_steps=12 format=3 uid="uid://dq6q7olr1f8y6"]
 
 [ext_resource type="Script" uid="uid://3pk5lctqj4do" path="res://addons/DanmakuGD/src/Spawner/BulletSpawner.cs" id="1_76bdp"]
 [ext_resource type="Script" uid="uid://5ocr5ceiskih" path="res://addons/DanmakuGD/Example/Main.cs" id="1_obn4c"]
 [ext_resource type="PackedScene" uid="uid://cesudro5awdj1" path="res://addons/DanmakuGD/Example/Player/Player.tscn" id="2_7i2u1"]
-[ext_resource type="Script" uid="uid://bxuynr56gmw2s" path="res://addons/DanmakuGD/Pattern/EquationDanmaku.cs" id="2_x36r1"]
 [ext_resource type="PackedScene" uid="uid://dwt6hvxay2g66" path="res://addons/DanmakuGD/Example/Bullet/Bullet.tscn" id="3_nqy6i"]
+[ext_resource type="Script" uid="uid://bxuynr56gmw2s" path="res://addons/DanmakuGD/Pattern/EquationDanmaku.cs" id="5_r68nw"]
+[ext_resource type="Script" uid="uid://dhu2h7n1dgiml" path="res://addons/DanmakuGD/Pattern/MLDanmaku.cs" id="6_6rxdq"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6rxdq"]
 load_path = "res://.godot/imported/choco_boss_lines_outline.png-3b031d37e5e246eaa2f0916fa804ab64.ctex"
@@ -19,33 +20,39 @@ var base = 0;
 var global = 0;
 
 func _ready():
-	_late_ready.call_deferred()
+    _late_ready.call_deferred()
 
 func _late_ready():
-	if not Engine.is_editor_hint():
-		spawner.Spawn(\"maybe\", 0, 0);
-		pass
+    if not Engine.is_editor_hint():
+        pass
 
 func _process(delta):
-	if not Engine.is_editor_hint():
-		timer += delta;
-		global += delta;
-		if  global < 5 and timer > 0.5:
-			spawner.SpawnFunction(\"cos\", 0, 5);		
-			spawner.Spawn(\"maybe\", 0, 0);
-			timer = 0;
-	
+    if not Engine.is_editor_hint():
+        timer += delta;
+        global += delta;
+
+        if timer > 0.1 and global < 0.5:
+            spawner.Spawn(\"maybe\", 0, 0);
+            timer = 0;
+     
+    
 "
 
-[sub_resource type="Resource" id="Resource_6rxdq"]
-script = ExtResource("2_x36r1")
+[sub_resource type="Resource" id="Resource_xfwul"]
+script = ExtResource("5_r68nw")
 Variables = Array[Object]([])
-VariableDefinitions = "B=4;"
-EquationDefinitions = "x=cos(T)|y=T;"
-Speed = 10.0
+VariableDefinitions = "A=1; B=2;"
+EquationDefinitions = "r=B*sin(2*T);"
+Speed = 20.0
 PatternID = "cos"
-BulletRefID = ""
 metadata/_custom_type_script = "uid://bxuynr56gmw2s"
+
+[sub_resource type="Resource" id="Resource_u6wru"]
+script = ExtResource("6_6rxdq")
+SourceFile = "res://addons/DanmakuGD/SamplePatterns/[Bulletsmorph]_aba_2.xml"
+PatternID = "maybe"
+BulletRefID = "default"
+metadata/_custom_type_script = "uid://dhu2h7n1dgiml"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_17wme"]
 load_path = "res://.godot/imported/graph.jpg-2429bf29eb9eef6e4a9372f351498e7e.ctex"
@@ -63,10 +70,10 @@ spawner = NodePath("BulletSpawner")
 metadata/_edit_group_ = true
 
 [node name="BulletSpawner" type="Node2D" parent="Sprite2D"]
-position = Vector2(0, 184)
+position = Vector2(0, 8)
 script = ExtResource("1_76bdp")
 bulletScene = ExtResource("3_nqy6i")
-fPatterns = Array[Resource]([SubResource("Resource_6rxdq")])
+patterns = Array[Resource]([SubResource("Resource_xfwul"), SubResource("Resource_u6wru")])
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -111,3 +118,4 @@ text = "Player: (x, y)"
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-1, 0)
 rotation = -1.83259
+zoom = Vector2(1.25, 1.25)

@@ -76,7 +76,7 @@ namespace BulletMLLib
 		/// </summary>
 		public BulletMLNode(ENodeName nodeType, IBulletManager manager)
 		{
-			NodeEquation = new BulletMLEquation(manager);
+			NodeEquation = new BulletMLEquation();
 			ChildNodes = new List<BulletMLNode>();
 			Name = nodeType;
 			NodeType = ENodeType.none;
@@ -317,7 +317,6 @@ namespace BulletMLLib
 			//validate all the childe nodes
 			foreach (BulletMLNode childnode in ChildNodes)
 			{
-                GD.Print("BulletMLNode:" + this);
                 childnode.ValidateNode();
 			}
 		}

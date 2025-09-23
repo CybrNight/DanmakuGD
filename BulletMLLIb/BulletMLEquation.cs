@@ -1,5 +1,4 @@
 using DanmakuGD;
-using Equationator;
 using Godot;
 using Godot.Collections;
 using System;
@@ -65,9 +64,9 @@ namespace BulletMLLib
 			return result;
 		}
 
-		public BulletMLEquation(IBulletManager manager)
+		public BulletMLEquation()
 		{
-			_manager = manager;
+			
 		}
 	}
 }

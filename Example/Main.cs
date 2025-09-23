@@ -45,7 +45,7 @@ public partial class Main : Node2D {
         if(scene.Instantiate() is not Sprite2D player)
             return;
         playerInstance = player;
-        player.Position = new(GetViewportRect().Size.X / 2f, GetViewportRect().Size.Y - 100f);
+        player.Position = new Vector2(GetViewportRect().Size.X / 2f, GetViewportRect().Size.Y - 100f);
         AddChild(player);
     }
 

@@ -1,5 +1,4 @@
 using DanmakuGD;
-using Equationator;
 using Godot;
 
 using System;
@@ -14,19 +13,6 @@ namespace BulletMLLib
 	{
 		Random Rand { get; }
 
-		/// <summary>
-		/// This is a list of additional callbacks that can be set in this BulletML implementation.
-		/// For example, if you have a method to return the player's Tier you could use $tier in the bulletml scripts
-		/// </summary>
-		Dictionary<string, FunctionDelegate> CallbackFunctions { get; }
-
-		Queue<NodeBullet> moverPool { get; }
-
-        /// <summary>
-        /// callback method to get the game difficulty.
-        /// </summary>
-        public FunctionDelegate GameDifficulty => () => 5;
-		public FunctionDelegate CurrentDelta { get; }
         public double Difficulty { get; set; }
 
         /// <summary>
@@ -60,5 +46,6 @@ namespace BulletMLLib
 
 
 		List<NodeBullet> GetBullets();
+		public Node2D PopBullet();
 	}
 }

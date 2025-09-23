@@ -1,10 +1,11 @@
 ﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 namespace DanmakuGD;
 
 /// <summary>
-/// Extension of <see cref="Expression"/>
+/// Extension of built-in Godot <see cref="Expression"/> to support memoisation 
 /// </summary>
 public partial class DanmakuEquation : Expression {
 
@@ -15,9 +16,10 @@ public partial class DanmakuEquation : Expression {
 
     public RefCounted BaseInstance { get; private set; }
     private Dictionary<string, float> variables = new Dictionary<string, float>();
+    private Dictionary<int, float> cache = new Dictionary<int, float>();
     
     public Variant Value { get {
-            return ExecuteExpression();
+        return ExecuteExpression();
     } }
 
     /// <summary>
@@ -55,8 +57,14 @@ public partial class DanmakuEquation : Expression {
     /// <returns></returns>
     public float ExecuteExpression() {
         var vars = variables.Values.ToArray();
+        var key = vars.GetHashCode();
+        var result = default(float);
 
-        return ExecuteExpression(vars, BaseInstance);
+        var status = cache.TryGetValue(key, out result);
+        if (!status){
+            cache[key] = ExecuteExpression(vars, BaseInstance);
+        }
+        return cache[key];
     }
 
     /// <summary>

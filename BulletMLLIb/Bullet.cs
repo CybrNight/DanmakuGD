@@ -192,7 +192,6 @@ namespace BulletMLLib
 		/// <param name="rootNode">This is a top level node... find the first "top" node and use it to define this bullet</param>
 		public void InitTopNode(BulletMLNode rootNode)
 		{
-            GD.Print("Init Top Node");
             Debug.Assert(null != rootNode);
 
 			//okay find the item labelled 'top'
@@ -280,16 +279,16 @@ namespace BulletMLLib
 		/// Asynchronous update method
 		/// </summary>
 		/// <returns></returns>
-		public Task UpdateAsync()
+		public async Task UpdateAsync()
 		{
 			//run the update method on a different thread
-			return Task.Factory.StartNew(() => { Update(); });
+			//await Update();
 		}
 
 		/// <summary>
 		/// Update this bullet.  Called once every 1/60th of a second during runtime
 		/// </summary>
-		public virtual void Update()
+		public virtual void Update(float delta)
 		{
 			//Flag to tell whether or not this bullet has finished all its tasks
 			for (int i = 0; i < Tasks.Count; i++)

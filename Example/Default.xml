@@ -2,41 +2,41 @@
 <!DOCTYPE bulletml SYSTEM "bulletml.dtd">
 
 <bulletml type="vertical"
-		  xmlns="http://www.asahi-net.or.jp/~cs8k-cyu/bulletml">
-	
-	 <!-- BulletML File is made of ACTIONS -->
-	<!-- Bullets store their owns ACTIONS TOO! Action->FireBullet->Action->etc... -->
-	<action label="top">
-		
-	   <!-- The main loop, until the boss is destroyed -->
-		 <!-- REPEAT tag encase an action within it to repeat-->
-		<repeat>
-			<!-- The main loop, until the boss is destroyed -->
-			<times>9999</times>
-			 <!-- ACTIONS can have many different subactions -->
-			<action>
-				<actionRef label = "flower">
-				<param>24</param>
-				</actionRef>
-			</action>
-		</repeat>
-		<vanish/>
+          xmlns="http://www.asahi-net.or.jp/~cs8k-cyu/bulletml">
+    
+     <!-- BulletML File is made of ACTIONS -->
+    <!-- Bullets store their owns ACTIONS TOO! Action->FireBullet->Action->etc... -->
+    <action label="top">
+        
+       <!-- The main loop, until the boss is destroyed -->
+         <!-- REPEAT tag encase an action within it to repeat-->
+        <repeat>
+            <!-- The main loop, until the boss is destroyed -->
+            <times>9999</times>
+             <!-- ACTIONS can have many different subactions -->
+            <action>
+                <actionRef label = "flower">
+                <param>24</param>
+                </actionRef>
+            </action>
+        </repeat>
+        <vanish/>
 
-	</action>
+    </action>
 
-	<action label = "flower">
-		<action>
-				<repeat>
-					<times>40</times>
-					 <!-- Main action here handles spawning the first part of the line at 72 degrees -->
-					<fire>
-						<direction type="sequence">360 / 24</direction>
-						<speed>2</speed>
-						<bullet/>
-					</fire>
-				</repeat>
-				<wait>10</wait>
-			</action>
-	</action>
+    <action label = "flower">
+        <action>
+                <repeat>
+                    <times>40</times>
+                     <!-- Main action here handles spawning the first part of the line at 72 degrees -->
+                    <fire>
+                        <direction type="sequence">360 / 24</direction>
+                        <speed>2</speed>
+                        <bullet/>
+                    </fire>
+                </repeat>
+                <wait>10</wait>
+            </action>
+    </action>
 
 </bulletml>

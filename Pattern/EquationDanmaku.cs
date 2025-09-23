@@ -11,7 +11,7 @@ namespace DanmakuGD;
 /// Defines a curve(s) for bullets to follow
 /// </summary>
 [GlobalClass]
-public partial class EquationDanmaku : Danmaku {
+public partial class EquationDanmaku : DanmakuPattern {
 
     [Export]
     public FloatVar[] Variables { get; private set; }
@@ -35,7 +35,7 @@ public partial class EquationDanmaku : Danmaku {
     /// </summary>
     public List<DanmakuFunction> equations = new List<DanmakuFunction>();
 
-    public void Parse() {
+    public override void Parse() {
         equations = new List<DanmakuFunction>();
         var floatVars = new List<FloatVar>();
         var variableDefLines = VariableDefinitions.Split(";", StringSplitOptions.RemoveEmptyEntries);

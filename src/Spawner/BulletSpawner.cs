@@ -1,5 +1,4 @@
 using BulletMLLib;
-using Equationator;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -29,23 +28,19 @@ public partial class BulletSpawner : Node2D, IBulletManager {
     public string patternID;
 
     [Export]
-    public EquationDanmaku[] fPatterns;
+    public DanmakuPattern[] patterns;
 
     public Random Rand { get; private set; } = new Random(Guid.NewGuid().GetHashCode());
-    public Dictionary<string, FunctionDelegate> CallbackFunctions { get; set; } = new Dictionary<string, FunctionDelegate>();
-
 
     public double Difficulty { get; set; }
-    public FunctionDelegate GameDifficulty => () => 0.5;
+    
+    public double currentDelta = 0;
 
-    private double currentDelta = 0;
-    public FunctionDelegate CurrentDelta { get => () => currentDelta; }
-
-    public Queue<NodeBullet> moverPool => new Queue<NodeBullet>();
+    public Queue<Node2D> moverPool => new Queue<Node2D>();
 
     private Data assets;
 
-    private MarkupBullet topLevelBullet;
+    private MLBullet topLevelBullet;
 
     public BulletSpawner() {
     
@@ -55,6 +50,14 @@ public partial class BulletSpawner : Node2D, IBulletManager {
         assets = GetNode<Data>("/root/Data");
 
         CallDeferred("_LateReady");
+
+        // Pool 1000 bullets before starting. Use these to avoid instancing lag
+        int i = 0;
+        var bullet = bulletScene.Instantiate();
+        while(i < 1) {
+            moverPool.Enqueue(bullet.Duplicate() as Node2D);
+            i++;
+        }
     }
 
     private void _LateReady() {
@@ -67,7 +70,7 @@ public partial class BulletSpawner : Node2D, IBulletManager {
         GetMousePosition = new PositionDelegate(GetGlobalMousePosition);
 
         try{
-            foreach(var f in fPatterns) {
+            foreach(var f in patterns) {
                 f.Parse();
             }
         } catch (Exception e){
@@ -81,9 +84,15 @@ public partial class BulletSpawner : Node2D, IBulletManager {
         var delta = (float)bigDelta;
         base._Process(delta);
 
-        Update(delta);
-        PostUpdate();
+        
 
+    }
+
+    public override void _PhysicsProcess(double delta) {
+        base._PhysicsProcess(delta);
+
+        Update(((float)delta));
+        PostUpdate();
     }
 
     public void Spawn(float x, float y) {
@@ -103,7 +112,7 @@ public partial class BulletSpawner : Node2D, IBulletManager {
         BulletMLLib.BulletPattern pat;
 
         //Create the TopLevel Bullet at the Position of the Spawner
-        topLevelBullet = (MarkupBullet)CreateTopBullet();
+        topLevelBullet = (MLBullet)CreateTopBullet();
         topLevelBullet.Position = GlobalPosition;
 
         pat = assets.GetPattern(patternID);
@@ -118,11 +127,11 @@ public partial class BulletSpawner : Node2D, IBulletManager {
 
     public void Update(float delta) {
         for(var i = 0; i < movers.Count; i++) {
-            movers[i].Update();
+            movers[i].Update(delta);
         }
 
         for(var i = 0; i < topLevelMovers.Count; i++) {
-            topLevelMovers[i].Update();
+            topLevelMovers[i].Update(delta);
         }
         currentDelta += Time.PhysicsDelta;
         FreeMovers();
@@ -133,7 +142,7 @@ public partial class BulletSpawner : Node2D, IBulletManager {
             if(movers[i].Used)
                 continue;
 
-            moverPool.Enqueue(movers[i]);
+            moverPool.Enqueue(movers[i].BulletNode);
             movers.RemoveAt(i);
             i--;
         }
@@ -187,7 +196,7 @@ public partial class BulletSpawner : Node2D, IBulletManager {
 
     public IBullet CreateBullet() {
         NodeBullet mover;
-        mover = new MarkupBullet(this) { TimeSpeed = timeSpeed, Scale = scale };
+        mover = new MLBullet(this) { TimeSpeed = timeSpeed, Scale = scale };
         mover.Init(this);
 
 
@@ -197,7 +206,7 @@ public partial class BulletSpawner : Node2D, IBulletManager {
     }
 
     public IBullet CreateTopBullet() {
-        var mover = new MarkupBullet(this) { TimeSpeed = timeSpeed, Scale = scale };
+        var mover = new MLBullet(this) { TimeSpeed = timeSpeed, Scale = scale };
 
         //initialize, store in our list, and return the bullet
         mover.Init(this);
@@ -228,6 +237,12 @@ public partial class BulletSpawner : Node2D, IBulletManager {
 
     public float GetCurrentTick() {
         throw new NotImplementedException();
+    }
+
+    public Node2D PopBullet(){
+        if (moverPool.Count > 0)
+            return moverPool.Dequeue();
+        return Data.Instance.GetBulletNode("default");
     }
 
     public List<NodeBullet> GetBullets() {

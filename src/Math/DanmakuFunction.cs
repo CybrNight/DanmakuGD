@@ -22,7 +22,6 @@ public enum CName {
 
 public partial class DanmakuFunction : Resource {
     public float T { get; set; }
-    public float Speed = 25;
 
     public CoordType CoordType { get; private set; } = CoordType.Carteesian;
     private Dictionary<string, float> variables = new Dictionary<string, float>();

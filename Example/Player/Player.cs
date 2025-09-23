@@ -35,8 +35,6 @@ public partial class Player : Sprite2D
         Position += movement.Normalized() * movementSpeed * delta;
 
         var position = Position;
-        position.X = Mathf.Clamp(position.X, 0f, GetViewportRect().Size.X);
-        position.Y = Mathf.Clamp(position.Y, 0f, GetViewportRect().Size.Y);
         Position = position;
     }
 
