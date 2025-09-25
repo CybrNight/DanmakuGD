@@ -1,4 +1,4 @@
-using BulletMLLib;
+using GDBulletML;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ public partial class Data : Node {
     public static Data Instance { get { return _instance; } }
 
     /// <summary>
-    /// Dictionary storing all loaded <see cref="BulletMLLib.BulletPattern"/> from <see cref="MLDanmaku"/> 
+    /// Dictionary storing all loaded <see cref="GDBulletML.BulletPattern"/> from <see cref="MLDanmaku"/> 
     /// </summary>
     private Dictionary<string, BulletPattern> patternCache = new Dictionary<string, BulletPattern>();
 
@@ -79,7 +79,7 @@ public partial class Data : Node {
     /// 
     /// </summary>
     /// <param name="p_id"></param>
-    /// <returns><see cref="BulletMLLib.BulletPattern"/></returns>
+    /// <returns><see cref="GDBulletML.BulletPattern"/></returns>
     public BulletPattern GetPattern(string p_id) {
         //Push a Warning to the console if the Pattern does not exist
         var success = patternCache.TryGetValue(p_id, out var pattern);

@@ -1,4 +1,4 @@
-using BulletMLLib;
+using GDBulletML;
 using Godot;
 using System.Threading.Tasks;
 
@@ -25,16 +25,17 @@ public partial class MLBullet : NodeBullet
         : base(myBulletManager) { }
 
     public override void Update(float delta) {
-        //Flag to tell whether or not this bullet has finished all its tasks
-        for(int i = 0; i < Tasks.Count; i++) {
-            Tasks[i].Run(this);
-        }
+            //Flag to tell whether or not this bullet has finished all its tasks
+            for(int i = 0; i < BulletTasks.Count; i++) {
+                BulletTasks[i].Run(this);
+            }
 
-        //only do this stuff if the bullet isn't done, cuz sin/cosin are expensive
-        Vector2 vel = (Acceleration + (Direction.ToVector2() * (Speed * TimeSpeed))) * Scale;
-        X += vel.X;
-        Y += vel.Y;
-        BulletNode.Rotation += (delta) * Speed;
+            //only do this stuff if the bullet isn't done, cuz sin/cosin are expensive
+            Vector2 vel = (Acceleration + (Direction.ToVector2() * (Speed * (TimeSpeed)))) * Scale;
+            X += vel.X;
+            Y += vel.Y;
+        
+           
     }
 
     public override void PostUpdate()

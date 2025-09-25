@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using BulletMLLib;
+using GDBulletML;
 using Godot;
 
 namespace DanmakuGD;
@@ -38,14 +38,14 @@ public partial class Main : Node2D {
     }
 
     private void _LateReady() {
-        GameManager.GameDifficulty = () => 1.0f;
+        Globals.GameDifficulty = () => 1.0f;
 
         // Add a dummy player sprite
         var scene = ResourceLoader.Load<PackedScene>(playerScene.ResourcePath);
         if(scene.Instantiate() is not Sprite2D player)
             return;
         playerInstance = player;
-        player.Position = new Vector2(GetViewportRect().Size.X / 2f, GetViewportRect().Size.Y - 100f);
+        player.Position = new Vector2(0, 0);
         AddChild(player);
     }
 

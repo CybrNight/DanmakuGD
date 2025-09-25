@@ -76,6 +76,9 @@
             <changeDirection>
                 <direction type="aim">0</direction>
             </changeDirection>
+              <changeSpeed>
+                <speed>6.0</speed>
+            </changeSpeed>
 
         </action>
     </bullet>
@@ -85,7 +88,7 @@
         <action>
 
             <changeSpeed>
-                <speed>4.0</speed>
+                <speed>6.0</speed>
                 <term>300</term>
             </changeSpeed>
 

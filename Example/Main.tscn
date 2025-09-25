@@ -23,7 +23,7 @@ func _ready():
     _late_ready.call_deferred()
 
 func _late_ready():
-    if not Engine.is_editor_hint():
+    if not Engine.is_editor_hint():   
         pass
 
 func _process(delta):
@@ -31,7 +31,11 @@ func _process(delta):
         timer += delta;
         global += delta;
 
-        if timer > 0.1 and global < 0.5:
+        if timer > 0.1:
+            #spawner.SpawnFunction(\"cos\", 0, 0);
+            timer = 0;
+
+        if global > 1 and global < 1.01:
             spawner.Spawn(\"maybe\", 0, 0);
             timer = 0;
      
@@ -49,7 +53,7 @@ metadata/_custom_type_script = "uid://bxuynr56gmw2s"
 
 [sub_resource type="Resource" id="Resource_u6wru"]
 script = ExtResource("6_6rxdq")
-SourceFile = "res://addons/DanmakuGD/SamplePatterns/[Bulletsmorph]_aba_2.xml"
+SourceFile = "res://addons/DanmakuGD/Sample/patterns/[Bulletsmorph]_aba_2.xml"
 PatternID = "maybe"
 BulletRefID = "default"
 metadata/_custom_type_script = "uid://dhu2h7n1dgiml"

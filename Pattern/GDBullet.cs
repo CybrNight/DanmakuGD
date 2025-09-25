@@ -1,4 +1,4 @@
-using BulletMLLib;
+using GDBulletML;
 using Godot;
 using Godot.Collections;
 using System;

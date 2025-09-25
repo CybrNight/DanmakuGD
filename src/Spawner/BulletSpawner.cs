@@ -1,4 +1,4 @@
-using BulletMLLib;
+using GDBulletML;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,11 @@ namespace DanmakuGD;
 public partial class BulletSpawner : Node2D, IBulletManager {
     private const float timeSpeed = 1.0f;
     private const float scale = 1.0f;
+
+
+    private float accumulatedTime = 0;
+    const float TIME_STEP = (1.0f/60.0f);
+
 
     private readonly List<NodeBullet> movers = new List<NodeBullet>();
     private readonly List<NodeBullet> topLevelMovers = new List<NodeBullet>();
@@ -38,6 +43,8 @@ public partial class BulletSpawner : Node2D, IBulletManager {
 
     public Queue<Node2D> moverPool => new Queue<Node2D>();
 
+    double IBulletManager.Tier { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
     private Data assets;
 
     private MLBullet topLevelBullet;
@@ -54,14 +61,14 @@ public partial class BulletSpawner : Node2D, IBulletManager {
         // Pool 1000 bullets before starting. Use these to avoid instancing lag
         int i = 0;
         var bullet = bulletScene.Instantiate();
-        while(i < 1) {
+        while(i < 10000) {
             moverPool.Enqueue(bullet.Duplicate() as Node2D);
             i++;
         }
     }
 
     private void _LateReady() {
-        GameManager.GameDifficulty = () => 1.0f;
+        Globals.GameDifficulty = () => 1.0f;
         assets.LoadDatas(this);
 
         // Setup PlayerPosition and MousePosition delegates
@@ -79,20 +86,23 @@ public partial class BulletSpawner : Node2D, IBulletManager {
         
     }
 
-    float counter = 0;
     public override void _Process(double bigDelta) {
         var delta = (float)bigDelta;
         base._Process(delta);
 
-        
+        accumulatedTime += delta;
 
+        while (accumulatedTime >= MLConfig.FixedTimeStep){
+            Update(delta);
+            accumulatedTime -= MLConfig.FixedTimeStep;
+        }
+
+        PostUpdate();
     }
 
     public override void _PhysicsProcess(double delta) {
         base._PhysicsProcess(delta);
 
-        Update(((float)delta));
-        PostUpdate();
     }
 
     public void Spawn(float x, float y) {
@@ -109,7 +119,7 @@ public partial class BulletSpawner : Node2D, IBulletManager {
     }
 
     public void Spawn(string patternID, Vector2 offset = default) {
-        BulletMLLib.BulletPattern pat;
+        GDBulletML.BulletPattern pat;
 
         //Create the TopLevel Bullet at the Position of the Spawner
         topLevelBullet = (MLBullet)CreateTopBullet();
